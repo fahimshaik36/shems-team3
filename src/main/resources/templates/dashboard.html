@@ -1,0 +1,282 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="ISO-8859-1">-->
+<!--    <title>Role Based Auth</title>-->
+<!--<link rel="stylesheet" -->
+<!-- href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+
+<!--</head>-->
+<!--<style>-->
+<!--     .navbar {-->
+<!--        background-color: #61df88;-->
+<!--    } .anchor{-->
+<!--    margin: 6px;-->
+<!--    background-color: #d9edf7;-->
+<!--    border-color: #d9edf7;-->
+<!--    }-->
+    
+<!--    input, label {-->
+<!--    display:block;-->
+<!--}-->
+   
+<!--</style>-->
+
+<!--<body>-->
+
+<!--    <nav class="navbar navbar-inverse navbar-fixed-top">-->
+<!--        <div class="container">-->
+<!--            <div class="navbar-header">-->
+<!--                            <h1>Role Based Authentication</h1>-->
+<!--                            <div class="container">-->
+<!--                            <div class="row">-->
+<!--                            <div class="col-md-3">-->
+<!--                           <h4> Hi, Welcome <span th:text ="*{userDetails}"></span> </h4></div> -->
+<!--                           <div class="col-md-3">-->
+<!--                           <a th:href="@{/logout}" class="btn anchor" style="margin-left:500px"> <i class="fa fa-arrow-circle-o-left"></i>&nbsp;Logout</a>-->
+<!--                           </div>     -->
+<!--          </div>      -->
+<!--           </div> -->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </nav>-->
+
+<!--    <br><br><br><br><br><br><br>-->
+<!--     Create HTML registration form -->
+<!--    <div class="container">-->
+<!--        <div class="row">-->
+
+<!--          <h1>Welcome to User Dashboard.Your User ROLE was selected as USER</h1>      -->
+
+<!--                </div>-->
+    
+<!--    </div>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>SHEMS – User Dashboard</title>
+
+<style>
+/* ================= THEME ================= */
+:root{
+ --bg:#f4f7fb;
+ --header:#2563eb;
+ --card:rgba(255,255,255,.88);
+ --text:#1f2937;
+ --muted:#6b7280;
+ --border:#c7d2fe;
+ --primary:#2563eb;
+ --accent:#16a34a;
+}
+body.dark{
+ --bg:#0b1020;
+ --header:#1e40af;
+ --card:rgba(18,24,48,.9);
+ --text:#e5e7eb;
+ --muted:#9ca3af;
+ --border:#1f2a44;
+ --primary:#7c9cff;
+ --accent:#22c55e;
+}
+
+/* ================= BASE ================= */
+body{
+ margin:0;
+ min-height:100vh;
+ background:var(--bg);
+ color:var(--text);
+ font-family:Segoe UI, Arial, sans-serif;
+ transition:.3s;
+}
+
+/* ================= HEADER ================= */
+.app-header{
+ height:72px;
+ background:var(--header);
+ padding:0 32px;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ box-shadow:0 2px 10px rgba(0,0,0,.15);
+}
+
+.brand .title{
+ font-size:18px;
+ font-weight:600;
+ color:white;
+}
+.brand .subtitle{
+ font-size:13px;
+ color:#e0e7ff;
+}
+.brand .subtitle.small{
+ font-size:12px;
+ opacity:.9;
+}
+
+.header-actions{
+ display:flex;
+ align-items:center;
+ gap:12px;
+}
+
+.theme-btn{
+ background:rgba(255,255,255,.18);
+ border:1px solid rgba(255,255,255,.4);
+ color:white;
+ padding:6px 12px;
+ border-radius:8px;
+ cursor:pointer;
+ transition:.2s;
+}
+.theme-btn:hover{
+ background:rgba(255,255,255,.28);
+}
+
+.logout-btn{
+ background:rgba(255,255,255,.25);
+ border:1px solid rgba(255,255,255,.45);
+ color:white;
+ padding:6px 14px;
+ border-radius:8px;
+ text-decoration:none;
+ font-weight:500;
+ transition:.2s;
+}
+.logout-btn:hover{
+ background:rgba(255,255,255,.35);
+}
+
+/* ================= PAGE ================= */
+.page{
+ min-height:calc(100vh - 72px);
+ padding:32px;
+ display:flex;
+ justify-content:center;
+ align-items:flex-start;
+}
+
+/* ================= DASHBOARD ================= */
+.dashboard-card{
+ width:100%;
+ max-width:760px;
+ padding:34px;
+ background:var(--card);
+ backdrop-filter:blur(16px);
+ border-radius:20px;
+ box-shadow:0 30px 60px rgba(0,0,0,.18);
+ transition:.25s;
+}
+.dashboard-card:hover{
+ transform:translateY(-2px);
+ box-shadow:0 38px 70px rgba(0,0,0,.22);
+}
+
+.dashboard-header{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:28px;
+}
+
+.dashboard-header h2{
+ margin:0;
+ letter-spacing:.3px;
+}
+
+.role-badge{
+ background:rgba(37,99,235,.12);
+ color:var(--primary);
+ padding:6px 14px;
+ border-radius:999px;
+ font-weight:600;
+ font-size:13px;
+}
+
+/* ================= INFO ================= */
+.info{
+ font-size:15px;
+ margin-bottom:10px;
+ color:var(--muted);
+}
+
+/* ================= EMPTY STATE ================= */
+.empty-state{
+ margin-top:28px;
+ padding:24px;
+ text-align:center;
+ background:rgba(37,99,235,.06);
+ border-radius:14px;
+}
+
+.empty-state strong{
+ display:block;
+ margin-bottom:6px;
+ color:var(--text);
+}
+
+.empty-state small{
+ color:var(--muted);
+}
+</style>
+
+<script>
+function toggleTheme(){
+ document.body.classList.toggle("dark");
+ localStorage.setItem(
+  "theme",
+  document.body.classList.contains("dark") ? "dark" : "light"
+ );
+}
+window.onload=()=>{
+ if(localStorage.getItem("theme")==="dark"){
+  document.body.classList.add("dark");
+ }
+}
+</script>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<div class="app-header">
+ <div class="brand">
+  <div class="title">SHEMS – Authentication Module</div>
+  <div class="subtitle">Smart Home Energy Management System</div>
+  <div class="subtitle small">Role-Based Access: Admin & User</div>
+ </div>
+
+ <div class="header-actions">
+  <button class="theme-btn" onclick="toggleTheme()">🌓</button>
+  <a th:href="@{/logout}" class="logout-btn">Logout</a>
+ </div>
+</div>
+
+<!-- ================= CONTENT ================= -->
+<div class="page">
+ <div class="dashboard-card">
+
+  <div class="dashboard-header">
+   <h2>User Dashboard</h2>
+   <span class="role-badge">USER</span>
+  </div>
+
+  <div class="info" th:text="'Logged in as: ' + ${userDetails}">
+   Logged in as
+  </div>
+
+  <!-- EMPTY / INFO STATE -->
+  <div class="empty-state">
+   <strong>No recent activity</strong>
+   <small>Your access is active and verified.</small>
+  </div>
+
+ </div>
+</div>
+
+</body>
+</html>
