@@ -4,8 +4,8 @@ This folder contains the complete documentation for the Smart Home Energy Manage
 
 ## Available Files
 
-Project Report (PDF)  
+### Project Report (PDF)
 [Download Project Report](SHEMS_Report.pdf)
 
-Project Presentation (PPT)  
+### Project Presentation (PPT)
 [Download Project Presentation](SHEMS_Presentation.pptx)
