@@ -1,7 +1,11 @@
-# Project Report
+# Project Documentation
 
-This folder contains the final project documentation for the Smart Home Energy Management System.
+This folder contains the complete documentation for the Smart Home Energy Management System.
 
-Download the complete report below:
+## Available Files
 
-[Download SHEMS Project Report (PDF)](SHEMS_Report.pdf)
+Project Report (PDF)  
+[Download Project Report](SHEMS_Report.pdf)
+
+Project Presentation (PPT)  
+[Download Project Presentation](SHEMS_Presentation.pptx)
